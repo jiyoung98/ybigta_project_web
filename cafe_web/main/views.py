@@ -3,7 +3,13 @@ from .models import Review,Loc,Cafe
 import csv,io
 
 def mainpage(request):
-    context = {}
+    review = Review.objects.all()
+    # sinchon_review = Review.objects.select_related('Loc').filter(Loc=8)
+    # print(len(sinchon_review))
+    # print(len(review))
+    context = {
+        'all_reviews':review,
+    }
     return render(request, 'main/mainpage.html', context=context)
 
 def cafedetail(request,pk):
@@ -73,7 +79,7 @@ def csv_upload(request):
     for column in csv.reader(io_string, delimiter=',', quotechar="|"):
         cafe = Cafe.objects.get(name=column[2])
         loc = Loc.objects.get(name=column[1])
-        created = Review.objects.update_or_create(
+        created = Review.objects.create(
             Loc=loc,
             Cafe=cafe,
             text=column[3],
