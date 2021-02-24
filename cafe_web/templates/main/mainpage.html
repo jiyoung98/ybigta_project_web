@@ -64,9 +64,9 @@
       </h3>
     </span>
       <nav class="nav nav-masthead justify-content-center float-md-end" style="height: 50px; line-height: 50px;">
-        <a class="nav-link active" aria-curresnt="page" href="#">Home</a>
-        <a class="nav-link" href="#">리뷰 작성하기</a>
-        <a class="nav-link" href="#">카페 분석 보러가기</a>
+        <a class="nav-link active" aria-curresnt="page" href="{% url 'main:mainpage' %}">Home</a>
+        <a class="nav-link" href="{% url 'main:write_recommend' %}">리뷰 작성하기</a>
+        <a class="nav-link" href="{% url 'main:search' %}">카페 분석 보러가기</a>
       </nav>
     </div>
   </header>
@@ -128,8 +128,8 @@
     <h1 style="margin-top: 5%;">필요한 카페 추천해 드립니다, "piCachu"</h1>
     <p class="lead">15개 지역, 33,000개의 리뷰 데이터. 감성 분석, 키워드 분류 기반 카페 평가 및 추천 프로젝트</p>
     <p class="lead">
-        <a href="#" class="btn btn-lg btn-secondary fw-bold border-white gotowrite">리뷰 작성하기</a>
-      <a href="#" class="btn btn-lg btn-secondary fw-bold border-white gotosearch">카페 분석 보러가기</a>
+        <a href="{% url 'main:write_recommend' %}" class="btn btn-lg btn-secondary fw-bold border-white gotowrite">리뷰 작성하기</a>
+      <a href="{% url 'main:search' %}" class="btn btn-lg btn-secondary fw-bold border-white gotosearch">카페 분석 보러가기</a>
     </p>
   </main>
 
@@ -138,10 +138,6 @@
   </footer>
 </div>
 
-
-
-<!-- 1. 신촌 2. 홍대 3. 한남동 4. 종로 5.익선동 6.왕십리 7.영등포 8.연남동 9.성수 10.서울대
-11. 대학로 12.광화문 13. 건대 14. 강남 15.가로수길 -->
 
 
 <script>
@@ -194,11 +190,11 @@ for (var x = 1; x < 16; x++) {
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
-        '분위기 좋은',
-        '커피가 맛있는',
-        '디저트가 맛있는',
-        '사진 찍기 좋은',
-        '스터디 하기 좋은'
+        '분위기',
+        '커피맛',
+        '디저트맛',
+        '사진',
+        '스터디',
     ],
 };
 

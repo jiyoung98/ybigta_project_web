@@ -1,0 +1,520 @@
+<html lang="en" class="h-100">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.80.0">
+  <title>MainPage</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  
+  <!-- <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> -->
+
+  <!-- chartjs cdn -->
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+  <style>
+
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+/* fontawesome */
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+
+form {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+	transition: width 0.5s;
+  margin: auto;
+	-webkit-backface-visibility: hidden;
+}
+
+form.opened {
+  width: 330px;
+}
+form.opened:before {
+  position: fixed;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+input[type="search"] {
+  position: absolute;
+  top: 0; 
+  right: 28px;
+  height: 60px;
+  width: 0;
+  float:left;
+  font-size: 1.5em;
+  border-radius: 30px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  outline: none;
+  border: none;
+  padding-left: 20px;
+  color: #28d7d7;
+	transition: width 0.5s;
+}
+
+form.opened input[type="search"] {
+  width: 300px;
+	transition: width 0.5s;
+}
+
+.searchbutton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  background: #28d7d7;
+  border: none;
+  border-radius: 30px;
+  color: #FFF;
+  font-size: 1.3em;
+  outline: none;
+  cursor: pointer;
+}
+
+form.opened button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    @media (max-width: 575px) {
+
+      .bumper {
+        height: 30px !important;
+      }
+
+      .other {
+        margin-top: 5px !important;
+      }
+
+
+      .nonediv {
+        display: none;
+      }
+      .othercafe {
+        clear: right;
+      }
+
+      .gotodetailreview {
+        clear: right;
+        margin-bottom: 5px;
+      }
+    }
+
+
+  </style>
+
+  <!-- Custom styles for this template -->
+  <!-- <link href="cover.css" rel="stylesheet"> -->
+</head>
+
+<body class="d-flex h-100 text-center text-white bg-dark">
+  
+<div class="p-3 mx-auto flex-column">
+<header class="mb-auto" style="display: block;">
+  <span>
+    <div>
+    <img src="/static/img/피카츄.png" style="width: 50px; height: auto; float: left;" alt="piCachu">
+    <h3 class="float-md-start mb-0" style="height: 50px; line-height: 50px;">
+      piCachu
+    </h3>
+  </span>
+    <nav class="nav nav-masthead justify-content-center float-md-end" style="height: 50px; line-height: 50px;">
+      <a class="nav-link active" aria-curresnt="page" href="{% url 'main:mainpage' %}">Home</a>
+      <a class="nav-link" href="{% url 'main:write_recommend' %}">리뷰 작성하기</a>
+      <a class="nav-link" href="{% url 'main:search' %}">카페 분석 보러가기</a>
+    </nav>
+</header>
+
+<div class="bumper" style="height: 100px;"></div>
+
+<form action="" method="POST" id="searchform">
+  <input id="cafename" type="search" placeholder="Search" onkeypress="javascript:if(event.keyCode == 13){trans()}" required>
+  <button type="submit" id="searchbtn" class="searchbutton">
+    <span class="fontawesome-search"></span>
+  </button>
+</form>
+
+
+<div class="row">
+  <div style="" class="col-sm-4 nonediv"></div>
+  <div style="" class="col-sm-4 nonediv"></div>
+  <div style="" class="col-sm-4 other">
+    <a class="btn btn-outline-light othercafe" href="{% url 'main:search' %}" role="button" style="width: 220px; margin-bottom: 5px;">다른 지역 카페 검색하러 가기</a>
+    <a class="btn btn-outline-light gotodetailreview" href="{% url 'main:reviewdetail' cafe.pk %}" role="button" style="width: 220px;">이 카페 상세 리뷰 보러가기</a>
+  </div>
+</div>
+
+<main class="px-3" style="color: black;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 cafeinfo">
+        <div class="card border-light mb-3">
+          <div class="card-header" style="display: block;">{{cafe.Loc}} {{cafe.name}}</div>
+          <div class="card-body">
+            <h5 class="card-title">{{cafe.Loc}} {{cafe.name}}의 특징: {{bestkeyword}}</h5>
+            <p class="card-text">
+              <div>{{cafe.Loc}}지역 리뷰 수 <strong style="color: #0085FF;">{{ranking1}}</strong>위</div>
+              <div>{{cafe.Loc}}지역 긍정 리뷰 수 <strong style="color: #0085FF;">{{ranking2}}</strong>위</div>
+              <div>{{cafe.Loc}}지역 부정 리뷰 수 대비 긍정 리뷰 수 <strong style="color: #0085FF;">{{ranking3}}</strong>위</div>
+              <div></div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div style="" class="col-sm-4"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 wholereview">
+        <div class="card border-light mb-3">
+          <div class="card-header" style="display: block;">전체 리뷰 수</div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <div id="allreviewnum">
+                <strong style="color: #0085FF;">{{allreviewnum}}</strong>개의 리뷰
+              </div>
+            </h5>
+            <p class="card-text">
+              <canvas id="goodbadpiechart"></canvas>
+              <div>* 0점 리뷰의 경우 감성 분석 점수 기반으로 별점 보정 후 0,1,2점 리뷰는 부정, 4,5점 리뷰는 긍정으로 분류했습니다.</div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 goodreview">
+        <div class="card border-light mb-3">
+          <div class="card-header" style="display: block;">별점 분포</div>
+          <div class="card-body">
+            <h5 class="card-title">
+            </h5>
+            <p class="card-text">
+              <canvas id="starbarchart"></canvas>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 badreview">
+        <div class="card border-light mb-3">
+          <div class="card-header" style="display: block;">리뷰 감성분석 평균 점수</div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <div id="reviewscoreaverage">
+                총 감성분석 평균 <strong style="color: #0085FF;">{{averagescore}}</strong>점
+              </div>
+            </h5>
+            <p class="card-text">
+              <div>"커피맛" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{coffee_averagescore}}</strong>점</div>
+              <div>"디저트맛" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{dessert_averagescore}}</strong>점</div>
+              <div>"분위기" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{vibe_averagescore}}</strong>점</div>
+              <div>"사진" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{photo_averagescore}}</strong>점</div>
+              <div>"스터디" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{study_averagescore}}</strong>점</div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 simplereview">
+        <div class="card border-light mb-3">
+          <div class="card-header" style="display: block;">단순 리뷰 비율</div>
+          <div class="card-body">
+            <h5 class="card-title">단순 리뷰 수: <strong style="color: #0085FF;">{{keyword_none_num}}</strong>개</h5>
+            <h5 class="card-title">단순 리뷰 비율: <strong style="color: #0085FF;">{{keyword_none_proportion}}</strong>%</h5>
+            <p class="card-text">* 단순 리뷰란, 단어 토큰이 2개 미만으로 키워드 분류에서 제외된 리뷰를 말합니다.</p>
+            <div class="progress">
+  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+  aria-valuenow="{{keyword_none_proportion}}" aria-valuemin="0" aria-valuemax="100" style="width:{{keyword_none_proportion}}%">
+  {{keyword_none_proportion}}%
+  </div>
+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 keyword">
+        <div class="card border-light mb-3">
+        <div class="card-header" style="display: block;">키워드별 리뷰 분포</div>
+        <div class="card-body">
+          <p class="card-text">
+            <canvas id="keywordchart"></canvas>
+          </p>
+        </div>
+      </div></div>
+      <div class="col-md-6 goodorbad">
+        <div class="card border-light mb-3">
+          <div class="card-header" style="display: block;">키워드별 긍부정 리뷰 개수 분포</div>
+          <div class="card-body">
+            <p class="card-text">
+              <canvas id="keywordgoodbadchart"></canvas>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+</div>
+
+<!-- 아래 스크립트는 piechart -->
+<script>
+  piechartdata = {
+    datasets: [{
+        data: [{{score0}}+{{score1}}+{{score2}}, {{score4}}+{{score5}}],
+        backgroundColor: [
+        '#FFCBCB',
+        '#B6E0FF',
+        ]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        '부정',
+        '긍정',
+    ],
+};
+
+var piectx = document.getElementById("goodbadpiechart");
+  var myDoughnutChart = new Chart(piectx, {
+    type: 'doughnut',
+    data: piechartdata,
+    options: {
+      maintainAspectRatio: false,
+      cutoutPercentage: 50,
+      elements: {
+        arc: {
+            borderWidth: 0
+        }
+    },
+    title: { display: true, 
+      text: '긍부정 분포' },
+                        legend: {
+                          display: false,
+                             position: 'bottom',
+                             labels: {
+                                     fontSize: 12,
+                                     fontFamily: 'sans-serif',
+                                     fontColor: 'white',
+                                         }
+                             }
+    }
+  });
+  
+
+</script>
+
+<!-- 아래 스크립트는 barchart -->
+<script>
+
+data = {
+    datasets: [{
+        data: [{{score0}},{{score1}},{{score2}},{{score3}},{{score4}},{{score5}}],
+        backgroundColor: [
+        '#a18cd1',
+        '#fbc2eb',
+        '#d4fc79',
+        '#a1c4fd',
+        '#fee140',
+        '#ff3399',
+        ]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        '0점',
+        '1점',
+        '2점',
+        '3점',
+        '4점',
+        '5점',
+    ],
+};
+
+
+var ctx = document.getElementById("starbarchart");
+  var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      legend: {
+                          display: false,
+                             labels: {
+                                     fontSize: 12,
+                                     fontFamily: 'sans-serif',
+                                     fontColor: 'white',
+                                     fontStyle: 'bold'
+                                         }
+                             }
+    }
+});
+</script>
+
+
+
+<!-- 키워드차트 -->
+<script>
+keywordchartdata = {
+    datasets: [{
+        data: [{{keyword_coffee_num}}, {{keyword_dessert_num}}, {{keyword_vibe_num}}, {{keyword_photo_num}}, {{keyword_study_num}}],
+        backgroundColor: [
+        'rgba(161,140,209,0.3)',
+        'rgba(251,194,235,0.3)',
+        'rgba(212,252,121,0.3)',
+        'rgba(161,196,253,0.3)',
+        'rgba(254,225,64,0.3)',
+        ],
+        borderColor:[
+        '#a18cd1',
+        '#fbc2eb',
+        '#d4fc79',
+        '#a1c4fd',
+        '#fee140',
+        ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+    '커피맛', '디저트맛', '분위기','사진','스터디',
+    ],
+};
+
+var keywordctx = document.getElementById("keywordchart");
+  var myPolarChart = new Chart(keywordctx, {
+    type: 'polarArea',
+    data: keywordchartdata,
+    options: {
+      elements: {
+        arc: {
+            borderWidth: 1
+        }
+    },
+                        legend: {
+                             position: 'top',
+                             labels: {
+                                     fontSize: 12,
+                                     fontFamily: 'sans-serif',
+                                         }
+                             }
+    }
+  });
+  
+
+
+</script>
+
+
+
+<!-- 키워드별 긍부정차트 -->
+<script>
+var keywordgoodbadctx = document.getElementById("keywordgoodbadchart");
+var chart = new Chart(keywordgoodbadctx, {
+  type: 'horizontalBar',
+  data: {
+    labels: ['커피맛', '디저트맛', '분위기','사진','스터디'],
+    datasets: [
+      {
+        data: [{{keyword_coffee_good}}, {{keyword_dessert_good}}, {{keyword_vibe_good}}, {{keyword_photo_good}}, {{keyword_study_good}}],
+        backgroundColor: '#B6E0FF',
+        label: '긍정'
+      },
+      {
+        data: [{{keyword_coffee_bad}}, {{keyword_dessert_bad}}, {{keyword_vibe_bad}}, {{keyword_photo_bad}}, {{keyword_study_bad}}],
+        backgroundColor: '#FFCBCB',
+        label: '부정'
+      }
+    ]
+  },
+  options: {
+    scales: {
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
+});
+</script>
+
+<script>
+$('button').on('click', function(e) {
+  e.preventDefault();
+  $('form').addClass('opened');
+  $('input[type="search"]').focus();
+});
+
+$('input[type="search"]').on('focusout', function(e) {
+  $('form').removeClass('opened');
+});
+</script>
+
+
+<script>
+  function trans() {
+      cafename = $("#cafename").val()
+      locname = "{{cafe.Loc}}"
+
+      console.log(cafename)
+
+      {% for cafes in all_cafes %}
+          if ('{{cafes.name}}' == cafename && '{{cafes.Loc.name}}'==locname) {
+            console.log('{{cafes.id}}')
+              var cafeid = '{{cafes.id}}'
+          }
+      {% endfor %}
+      if (cafeid==undefined) {
+        alert('동일 지역의 카페 검색 결과가 없습니다. 다시 검색해주세요.')
+      } else {
+        console.log(cafeid)
+        window.location.href = "http://127.0.0.1:8000/cafedetail/"+cafeid+"/";
+      }
+  }
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

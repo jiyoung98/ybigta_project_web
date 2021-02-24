@@ -12,4 +12,5 @@ urlpatterns = [
     path("cafe_csv_upload", cafe_csv_upload, name="cafe_csv_upload"),
     path("csv_upload", csv_upload, name="csv_upload"),
     path("write_recommend",write_recommend,name="write_recommend"),
+    path("search",search,name="search"),
 ]
