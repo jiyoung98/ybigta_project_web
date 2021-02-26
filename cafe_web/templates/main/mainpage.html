@@ -1,23 +1,32 @@
-<html lang="en" class="h-100"><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.80.0">
-    <title>MainPage</title>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <title>piCachu:카페 평가 및 추천</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/5.0/examples/cover/"
+    />
 
     <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
     <!-- <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> -->
 
     <!-- chartjs cdn -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-
-
-
 
     <style>
       .bd-placeholder-img {
@@ -35,203 +44,250 @@
       }
 
       .gotosearch {
-          color: black;
+        color: black;
       }
 
       .gotowrite {
-          color: black;
+        color: black;
       }
 
       .row {
         place-items: center;
       }
-
     </style>
 
-    
     <!-- Custom styles for this template -->
     <!-- <link href="cover.css" rel="stylesheet"> -->
   </head>
-  <body class="d-flex h-100 text-center text-white bg-dark">
-    
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <span>
+
+  <body style="background-color: rgb(34, 37, 41)">
+    <header class="mb-auto" style="color: white">
       <div>
-      <img src="/static/img/피카츄.png" style="width: 50px; height: auto; float: left;" alt="piCachu">
-      <h3 class="float-md-start mb-0" style="height: 50px; line-height: 50px;">
-        piCachu
-      </h3>
-    </span>
-      <nav class="nav nav-masthead justify-content-center float-md-end" style="height: 50px; line-height: 50px;">
-        <a class="nav-link active" aria-curresnt="page" href="{% url 'main:mainpage' %}">Home</a>
-        <a class="nav-link" href="{% url 'main:write_recommend' %}">리뷰 작성하기</a>
-        <a class="nav-link" href="{% url 'main:search' %}">카페 분석 보러가기</a>
-      </nav>
+        <span>
+          <img
+            src="/static/img/피카츄.png"
+            style="width: 50px; height: auto; float: left"
+            alt="piCachu"
+          />
+          <h3
+            class="float-md-start mb-0"
+            style="height: 50px; line-height: 50px"
+          >
+            piCachu
+          </h3>
+        </span>
+        <nav
+          class="nav nav-masthead justify-content-center float-md-end"
+          style="height: 50px; line-height: 50px"
+        >
+          <a
+            class="nav-link active"
+            aria-curresnt="page"
+            href="{% url 'main:mainpage' %}"
+            >Home</a
+          >
+          <a class="nav-link" href="{% url 'main:write_recommend' %}"
+            >리뷰 작성하기</a
+          >
+          <a class="nav-link" href="{% url 'main:search' %}"
+            >카페 분석 보러가기</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <div class="d-flex text-center text-white bg-dark" style="width: 100%">
+      <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <div class="bumper" style="height: 100px"></div>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-2">
+              <canvas id="mychart1"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart2"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart3"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart4"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart5"></canvas>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-md-2">
+              <canvas id="mychart6"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart7"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart8"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart9"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart10"></canvas>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-md-2">
+              <canvas id="mychart11"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart12"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart13"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart14"></canvas>
+            </div>
+            <div class="col-md-2">
+              <canvas id="mychart15"></canvas>
+            </div>
+          </div>
+        </div>
+        <main class="px-3">
+          <h1 style="margin-top: 5%">필요한 카페 추천해 드립니다, "piCachu"</h1>
+          <p class="lead">
+            15개 지역, 33,000개의 리뷰 데이터. 감성 분석, 키워드 분류 기반 카페
+            평가 및 추천 프로젝트
+          </p>
+          <p class="lead">
+            <a
+              href="{% url 'main:write_recommend' %}"
+              class="btn btn-lg btn-secondary fw-bold border-white gotowrite"
+              >리뷰 작성하기</a
+            >
+            <a
+              href="{% url 'main:search' %}"
+              class="btn btn-lg btn-secondary fw-bold border-white gotosearch"
+              >카페 분석 보러가기</a
+            >
+          </p>
+        </main>
+
+        <div class="bumper" style="height: 100px"></div>
+
+        <footer class="mt-auto text-white-50" style="margin-bottom: 3%">
+          <p>
+            YBIGTA 18기 신입기수 프로젝트, by
+            <span class="text-white">김승하 한지영 홍진우</span>.<span
+              style="margin-left: 10px"
+              >go to
+              <a
+                href="https://github.com/jiyoung98/ybigta_project_web"
+                class="text-white"
+                >git repo</a
+              ></span
+            >
+          </p>
+        </footer>
+      </div>
     </div>
-  </header>
 
-  <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-2">
-          <canvas id="mychart1"></canvas>
-        </div>
-        <div class="col-md-2">
-          <canvas id="mychart2"></canvas>
-        </div>
-        <div class="col-md-2">
-          <canvas id="mychart3"></canvas>
-        </div>
-        <div class="col-md-2">
-          <canvas id="mychart4"></canvas>
-        </div>
-        <div class="col-md-2">
-          <canvas id="mychart5"></canvas>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-md-2">
-        <canvas id="mychart6"></canvas>
-      </div>
-      <div class="col-md-2">
-        <canvas id="mychart7"></canvas>
-      </div>
-      <div class="col-md-2">
-        <canvas id="mychart8"></canvas>
-      </div>
-      <div class="col-md-2">
-        <canvas id="mychart9"></canvas>
-      </div>
-      <div class="col-md-2">
-        <canvas id="mychart10"></canvas>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-md-2">
-        <canvas id="mychart11"></canvas>
-      </div>
-      <div class="col-md-2">
-        <canvas id="mychart12"></canvas>
-      </div>
-      <div class="col-md-2">
-        <canvas id="mychart13"></canvas>
-      </div>
-      <div class="col-md-2">
-        <canvas id="mychart14"></canvas>
-      </div>
-      <div class="col-md-2">
-        <canvas id="mychart15"></canvas>
-      </div>
-    </div>
-</div>
-  <main class="px-3">
-    <h1 style="margin-top: 5%;">필요한 카페 추천해 드립니다, "piCachu"</h1>
-    <p class="lead">15개 지역, 33,000개의 리뷰 데이터. 감성 분석, 키워드 분류 기반 카페 평가 및 추천 프로젝트</p>
-    <p class="lead">
-        <a href="{% url 'main:write_recommend' %}" class="btn btn-lg btn-secondary fw-bold border-white gotowrite">리뷰 작성하기</a>
-      <a href="{% url 'main:search' %}" class="btn btn-lg btn-secondary fw-bold border-white gotosearch">카페 분석 보러가기</a>
-    </p>
-  </main>
+    <script>
 
-  <footer class="mt-auto text-white-50">
-    <p>YBIGTA 18기 신입기수 프로젝트, by <span class="text-white">김승하 한지영 홍진우</span>.<span style="margin-left: 10px;">go to <a href="https://github.com/jiyoung98/ybigta_project_web" class="text-white">git repo</a></span></p>
-  </footer>
-</div>
+        loc_list = ['홍대','한남동','종로','익선동','왕십리','영등포','연남동','신촌','성수','서울대','대학로','광화문','건대','강남','가로수길']
+        loc_list = loc_list.reverse()
 
 
-
-<script>
-
-  loc_list = ['홍대','한남동','종로','익선동','왕십리','영등포','연남동','신촌','성수','서울대','대학로','광화문','건대','강남','가로수길']
-  loc_list = loc_list.reverse()
-
-
-  for (var x =1; x<16; x++) {
-    eval("var vibe" + x + "= 0");
-    eval("var coffee" + x + "= 0");
-    eval("var dessert" + x + "= 0");
-    eval("var photo" + x + "= 0");
-    eval("var study" + x + "= 0");
-  }
-
-  {% for review in all_reviews %}
-    for (var x=1; x<16; x++) {
-      if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='분위기') {
-        eval("vibe" + x + "+= 1");
-      }
-      if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='커피맛') {
-        eval("coffee" + x + "+= 1");
-      }
-      if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='디저트맛') {
-        eval("dessert" + x + "+= 1");
-      }
-      if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='사진') {
-        eval("photo" + x + "+= 1");
-      }
-      if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='공부') {
-        eval("study" + x + "+= 1");
-      }
-    }
-  {% endfor %}
-
-
-for (var x = 1; x < 16; x++) {
-  data = {
-    datasets: [{
-        data: [eval('vibe'+x), eval('coffee'+x), eval('dessert'+x),eval('photo'+x),eval('study'+x)],
-        backgroundColor: [
-        '#a18cd1',
-        '#fbc2eb',
-        '#d4fc79',
-        '#a1c4fd',
-        '#fee140',
-        ]
-    }],
-
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-        '분위기',
-        '커피맛',
-        '디저트맛',
-        '사진',
-        '스터디',
-    ],
-};
-
-console.log(vibe2)
-  var ctx = document.getElementById("mychart" + (x));
-  var myDoughnutChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: data,
-    options: {
-      maintainAspectRatio: false,
-      cutoutPercentage: 50,
-      elements: {
-        arc: {
-            borderWidth: 0
+        for (var x =1; x<16; x++) {
+          eval("var vibe" + x + "= 0");
+          eval("var coffee" + x + "= 0");
+          eval("var dessert" + x + "= 0");
+          eval("var photo" + x + "= 0");
+          eval("var study" + x + "= 0");
         }
-    },
-    title: { display: true, 
-      text: loc_list[x-1] },
-                        legend: {
-                          display: false,
-                             position: 'bottom',
-                             labels: {
-                                     fontSize: 12,
-                                     fontFamily: 'sans-serif',
-                                     fontColor: 'white',
-                                     fontStyle: 'bold'
-                                         }
-                             }
-    }
-  });
-}
-</script>
+
+        {% for review in all_reviews %}
+          for (var x=1; x<16; x++) {
+            if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='분위기') {
+              eval("vibe" + x + "+= 1");
+            }
+            if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='커피맛') {
+              eval("coffee" + x + "+= 1");
+            }
+            if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='디저트맛') {
+              eval("dessert" + x + "+= 1");
+            }
+            if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='사진') {
+              eval("photo" + x + "+= 1");
+            }
+            if ('{{review.Loc.id}}'==x && '{{review.keyword}}'=='공부') {
+              eval("study" + x + "+= 1");
+            }
+          }
+        {% endfor %}
 
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-  
+      for (var x = 1; x < 16; x++) {
+        data = {
+          datasets: [{
+              data: [eval('vibe'+x), eval('coffee'+x), eval('dessert'+x),eval('photo'+x),eval('study'+x)],
+              backgroundColor: [
+              '#a18cd1',
+              '#fbc2eb',
+              '#d4fc79',
+              '#a1c4fd',
+              '#fee140',
+              ]
+          }],
 
-</body>
+          // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+              '분위기',
+              '커피맛',
+              '디저트맛',
+              '사진',
+              '스터디',
+          ],
+      };
+
+      console.log(vibe2)
+        var ctx = document.getElementById("mychart" + (x));
+        var myDoughnutChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: data,
+          options: {
+            maintainAspectRatio: false,
+            cutoutPercentage: 50,
+            elements: {
+              arc: {
+                  borderWidth: 0
+              }
+          },
+          title: { display: true,
+            text: loc_list[x-1] },
+                              legend: {
+                                display: false,
+                                   position: 'bottom',
+                                   labels: {
+                                           fontSize: 12,
+                                           fontFamily: 'sans-serif',
+                                           fontColor: 'white',
+                                           fontStyle: 'bold'
+                                               }
+                                   }
+          }
+        });
+      }
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+      integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+      integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

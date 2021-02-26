@@ -1,0 +1,23 @@
+pip install sklearn
+
+pip install pandas
+
+pip install numpy(already satisfied)
+
+pip install tensorflow
+
+pip install konlpy
+
+pip install nltk
+
+pip install git+https://github.com/ssut/py-hanspell.git
+
+pip install git+https://github.com/haven-jeon/PyKoSpacing.git
+
+pip install matplotlib
+
+pip install regex
+
+pip install urllib(built_in)
+
+pip install json(built_in)

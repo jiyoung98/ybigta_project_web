@@ -5,7 +5,7 @@
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.80.0">
-  <title>MainPage</title>
+  <title>piCachu:카페 평가 및 추천</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
 
@@ -34,6 +34,13 @@
 [class*="fontawesome-"]:before {
   font-family: 'FontAwesome', sans-serif;
 }
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-size: 1.4rem;
+  opacity: 1; /* Firefox */
+}
+
 
 
 form {
@@ -147,10 +154,9 @@ form.opened button {
   <!-- <link href="cover.css" rel="stylesheet"> -->
 </head>
 
-<body class="d-flex h-100 text-center text-white bg-dark">
-  
-<div class="p-3 mx-auto flex-column">
-<header class="mb-auto" style="display: block;">
+
+<body style="background-color: rgb(34, 37, 41)">
+  <header class="mb-auto" style="color: white">
   <span>
     <div>
     <img src="/static/img/피카츄.png" style="width: 50px; height: auto; float: left;" alt="piCachu">
@@ -164,11 +170,14 @@ form.opened button {
       <a class="nav-link" href="{% url 'main:search' %}">카페 분석 보러가기</a>
     </nav>
 </header>
+<div class="d-flex h-100 text-center text-white bg-dark" style="width: 100%;">
+  
+<div class="p-3 mx-auto flex-column">
 
-<div class="bumper" style="height: 100px;"></div>
+<div class="bumper" style="height: 50px;"></div>
 
 <form action="" method="POST" id="searchform">
-  <input id="cafename" type="search" placeholder="Search" onkeypress="javascript:if(event.keyCode == 13){trans()}" required>
+  <input id="cafename" type="search" placeholder="'{{cafe.Loc}}'지역 다른 카페 검색" onkeypress="javascript:if(event.keyCode == 13){trans()}" required>
   <button type="submit" id="searchbtn" class="searchbutton">
     <span class="fontawesome-search"></span>
   </button>
@@ -180,7 +189,7 @@ form.opened button {
   <div style="" class="col-sm-4 nonediv"></div>
   <div style="" class="col-sm-4 other">
     <a class="btn btn-outline-light othercafe" href="{% url 'main:search' %}" role="button" style="width: 220px; margin-bottom: 5px;">다른 지역 카페 검색하러 가기</a>
-    <a class="btn btn-outline-light gotodetailreview" href="{% url 'main:reviewdetail' cafe.pk %}" role="button" style="width: 220px;">이 카페 상세 리뷰 보러가기</a>
+    <a class="btn btn-outline-light gotodetailreview" href="{% url 'main:reviewdetail' cafe.pk %}" role="button" style="width: 220px;">{{cafe.name}} 상세 리뷰 보러가기</a>
   </div>
 </div>
 
@@ -293,6 +302,7 @@ form.opened button {
 
 </main>
 
+</div>
 </div>
 
 <!-- 아래 스크립트는 piechart -->

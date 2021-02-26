@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>piCachu:카페 평가 및 추천</title>
 
     <!-- Bootstrap core CSS -->
     <link
@@ -161,41 +161,39 @@
     </style>
   </head>
   <body>
+    <header class="mb-auto">
+      <span>
+        <img
+          src="/static/img/피카츄.png"
+          style="width: 50px; height: auto; float: left"
+          alt="piCachu"
+        />
+        <h3 class="float-md-start mb-0" style="height: 50px; line-height: 50px">
+          piCachu
+        </h3>
+      </span>
+      <nav
+        class="nav nav-masthead justify-content-center float-md-end"
+        style="height: 50px; line-height: 50px"
+      >
+        <a
+          class="nav-link active"
+          aria-curresnt="page"
+          href="{% url 'main:mainpage' %}"
+          >Home</a
+        >
+        <a class="nav-link" href="{% url 'main:write_recommend' %}"
+          >리뷰 작성하기</a
+        >
+        <a class="nav-link" href="{% url 'main:search' %}"
+          >카페 분석 보러가기</a
+        >
+      </nav>
+    </header>
     <div class="d-flex h-100 text-center text-white bg-dark">
-      <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
-          <span>
-            <img
-              src="/static/img/피카츄.png"
-              style="width: 50px; height: auto; float: left"
-              alt="piCachu"
-            />
-            <h3
-              class="float-md-start mb-0"
-              style="height: 50px; line-height: 50px"
-            >
-              piCachu
-            </h3>
-          </span>
-          <nav
-            class="nav nav-masthead justify-content-center float-md-end"
-            style="height: 50px; line-height: 50px"
-          >
-            <a
-              class="nav-link active"
-              aria-curresnt="page"
-              href="{% url 'main:mainpage' %}"
-              >Home</a
-            >
-            <a class="nav-link" href="{% url 'main:write_recommend' %}"
-              >리뷰 작성하기</a
-            >
-            <a class="nav-link" href="{% url 'main:search' %}"
-              >카페 분석 보러가기</a
-            >
-          </nav>
-        </header>
-      </div>
+      <div
+        class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column"
+      ></div>
     </div>
 
     <div id="box" style="margin-top: 250px">

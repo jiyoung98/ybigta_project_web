@@ -13,4 +13,5 @@ urlpatterns = [
     path("csv_upload", csv_upload, name="csv_upload"),
     path("write_recommend",write_recommend,name="write_recommend"),
     path("search",search,name="search"),
+    path("ajax",ajax,name="ajax"),
 ]

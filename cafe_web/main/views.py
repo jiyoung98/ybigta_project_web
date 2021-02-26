@@ -2,6 +2,26 @@ from django.shortcuts import render
 from .models import Review,Loc,Cafe
 import csv,io
 from django.views.decorators.csrf import csrf_exempt
+import pandas as pd
+import numpy as np
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from hanspell import spell_checker
+from pykospacing import spacing
+from konlpy.tag import Okt
+import nltk
+from nltk.corpus import stopwords 
+from nltk.tokenize import word_tokenize 
+
+okt = Okt()
+
+import regex as re
+from django.http import JsonResponse
+
+
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
 
 
 def mainpage(request):
@@ -18,6 +38,118 @@ def search(request):
         'all_cafes':cafe,
     }
     return render(request, 'main/search.html', context=context)
+
+
+@csrf_exempt
+def write_recommend(request):
+    cafe = Cafe.objects.all()
+    context = {
+        'all_cafes':cafe,
+    }
+    return render(request, 'main/write_recommend.html', context=context)
+
+
+def keyword_scoring(exp_sent):
+    data = pd.read_csv('static/csv/final_keyword_scoring_data.csv')
+    data = data.rename(columns= {'Unnamed: 0' : 'token'})
+    coffeedessertscore = 0
+    pricescore = 0
+    manscore = 0
+    vibescore = 0
+    for i, word in enumerate(data['token']):
+        if word in exp_sent:
+            coffeedessertscore += data['커피/Noun'][i]
+            pricescore += data['가격/Noun'][i]
+            manscore += data['직원/Noun'][i]
+            vibescore += data['분위기/Noun'][i]
+    scorelist = [coffeedessertscore, pricescore, manscore, vibescore]
+    return scorelist
+
+# 전처리 함수들
+def clean_text(texts): 
+  corpus = [] 
+  for i in range(0, len(texts)): 
+    review = re.sub(r'[@%\\*=()/~#&\+á?\xc3\xa1\-\|\.\:\;\!\-\,\_\~\$\'\"]', '',str(texts[i])) #remove punctuation 
+    review = re.sub(r'\d+','', str(texts[i]))# remove number 
+    review = review.lower() #lower case 
+    review = re.sub(r'\s+', ' ', review) #remove extra space 
+    review = re.sub(r'<[^>]+>','',review) #remove Html tags 
+    review = re.sub(r'\s+', ' ', review) #remove spaces 
+    review = re.sub(r"^\s+", '', review) #remove space from start 
+    review = re.sub(r'\s+$', '', review) #remove space from the end 
+    review = re.sub(r'&', '', review)
+
+    corpus.append(review) 
+  return corpus
+
+def grammar_check(text):
+  spelled_sent = spell_checker.check(text)
+  hanspell_sent = spelled_sent.checked
+  return hanspell_sent
+
+def tokenize_tagged(text):
+  temp_X = okt.pos(text, norm=True, stem=True) # 토큰화
+  stop_words = open('static/txt/korean_stopwords.txt').read()
+  stop_words=stop_words.split('\n')
+  temp_X = [word for word in temp_X if not word in stop_words] # 불용어 제거
+  return ['/'.join(t) for t in temp_X]
+
+def preprocess(crude_text):
+  token_list = []
+  txt = ''.join(clean_text(crude_text))
+  txt1 = spacing(txt)
+  txt2 = grammar_check(txt1)
+  txt3 = tokenize_tagged(txt2)
+  regex1 = re.compile('Josa$')
+  regex2 = re.compile('Punctuation$')
+  regex3 = re.compile('Suffix$')
+  regex4 = re.compile('KoreanParticle$')
+  regex5 = re.compile('Alpha$')
+  regex6 = re.compile('Foreign$')
+  text_nj = []
+  for item in txt3:
+    mo1 = regex1.search(item)
+    mo2 = regex2.search(item)
+    mo3 = regex3.search(item)
+    mo4 = regex4.search(item)
+    mo5 = regex5.search(item)
+    mo6 = regex6.search(item)
+    if mo1 == None and mo2 == None and mo3 == None and mo4 == None and  mo5 == None and mo6 == None:
+      text_nj.append(item)
+
+  return text_nj
+
+
+
+def preprocessing(txt):
+    preprocessed = preprocess(txt)
+    return preprocessed
+
+
+def ajax(request):
+    cafeid = request.POST.get("cafeid")
+    message = request.POST.get("message")
+    exceptcafe = Cafe.objects.get(pk=cafeid)
+    exp_sent = preprocessing(message)
+    print(exp_sent)
+    scorelist = keyword_scoring(exp_sent)
+    print(scorelist)
+    keywordlist = ["커피/디저트","가격","직원","분위기"]
+    bestindex = scorelist.index(max(scorelist))
+    for i in range(4):
+        if bestindex == i:
+            reviewkeyword = keywordlist[i]
+
+
+    print(reviewkeyword)
+
+    context = {
+        "reviewkeyword":reviewkeyword,
+    }
+    return JsonResponse(context)
+
+
+
 
 @csrf_exempt
 def cafedetail(request,pk):
@@ -269,13 +401,13 @@ def cafedetail(request,pk):
 
 def reviewdetail(request,pk):
     # cafe = Cafe.objects.get(pk=pk)
-    context = {}
+    cafes = Cafe.objects.all()
+    cafe = Cafe.objects.get(pk=pk)
+    context = {
+        'all_cafes':cafes,
+        'cafe':cafe,
+    }
     return render(request, 'main/reviewpage.html', context=context)
-
-def write_recommend(request):
-    # cafe = Cafe.objects.get(pk=pk)
-    context = {}
-    return render(request, 'main/write_recommend.html', context=context)
 
 def cafe_csv_upload(request):
     # declaring template
