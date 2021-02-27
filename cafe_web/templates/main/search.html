@@ -25,48 +25,6 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <style>
       body {
-        animation: fadein 400ms ease-out;
-        -moz-animation: fadein 400ms ease-out; /* Firefox */
-        -webkit-animation: fadein 400ms ease-out; /* Safari and  Chrome */
-        -o-animation: fadein 400ms ease-out; /* Opera */
-      }
-      @keyframes fadein {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @-moz-keyframes fadein {
-        /* Firefox */
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @-webkit-keyframes fadein {
-        /* Safari and Chrome */
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @-o-keyframes fadein {
-        /* Opera */
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-
-      body {
         /* 	background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%); */
         background: rgb(34, 37, 41);
         color: white;
@@ -169,7 +127,11 @@
           alt="piCachu"
         />
         <h3 class="float-md-start mb-0" style="height: 50px; line-height: 50px">
-          piCachu
+          <a
+            href="{% url 'main:mainpage' %}"
+            style="text-decoration: none; color: white"
+            >piCachu</a
+          >
         </h3>
       </span>
       <nav
@@ -208,11 +170,11 @@
             <select class="form-select" id="inputGroupSelect01" name="locname">
               <option selected>지역을 선택하세요</option>
               <option value="가로수길">가로수길</option>
-              <option value="강남">강남</option>
+              <option value="강남역">강남역</option>
               <option value="건대">건대</option>
               <option value="광화문">광화문</option>
               <option value="대학로">대학로</option>
-              <option value="서울대">서울대</option>
+              <option value="서울대입구">서울대입구</option>
               <option value="성수">성수</option>
               <option value="신촌">신촌</option>
               <option value="연남동">연남동</option>
@@ -242,13 +204,24 @@
       function trans() {
           cafename = $("#cafename").val()
           locname = $('#inputGroupSelect01').val()
-          {% for cafe in all_cafes %}
-              if ('{{cafe.name}}' == cafename && '{{cafe.Loc.name}}'==locname) {
-                  var cafeid = '{{cafe.id}}'
-              }
 
+          console.log(cafename)
+
+          {% for cafes in all_cafes %}
+              if ('{{cafes.name}}' == cafename && '{{cafes.Loc.name}}'==locname) {
+                console.log('{{cafes.id}}')
+                  var cafeid = '{{cafes.id}}'
+              }
           {% endfor %}
-          $("#realform").attr("action", "http://127.0.0.1:8000/cafedetail/"+cafeid+"/");
+
+          if (cafeid==undefined) {
+            alert('동일 지역의 카페 검색 결과가 없습니다. 다시 검색해주세요.')
+            $("#cafename").val("");
+            $("#cafename").focus();
+          } else {
+            console.log(cafeid)
+            $("#realform").attr("action", "http://127.0.0.1:8000/cafedetail/"+cafeid+"/");
+          }
       }
     </script>
 

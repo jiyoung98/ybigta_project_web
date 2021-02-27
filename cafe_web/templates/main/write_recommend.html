@@ -9,6 +9,11 @@
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
 
+  <!-- css 파일 -->
+  <link rel="stylesheet" href="https://nowonbun.github.io/Loader/loader.css">
+
+  <!-- 출처: https://nowonbun.tistory.com/79 [명월 일지] -->
+
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
@@ -23,10 +28,199 @@
 
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
+  <!-- javascript 파일 -->
+  <script type="text/javascript" src="https://nowonbun.github.io/Loader/loader.js"></script>
+
   <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
 
   <style>
+
+
+    /* modal */
+
+
+.container {
+  align-items: center;
+  /*       background: #F1EEF1;
+  border: 1px solid #D2D1D4;
+  */      display: flex;
+  height: 500px;
+  justify-content: center;
+  width: 360px;
+  opacity: 85%;
+}
+.email {
+  background: rgba( 255, 255, 255, 0 );
+  border-radius: 16px;
+  height: 32px;
+  overflow: hidden;
+  position: relative;
+  width: 162px;
+  -webkit-tap-highlight-color: transparent;
+  transition: width 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+    height 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+    box-shadow 300ms cubic-bezier(0.4, 0.0, 0.2, 1),
+    border-radius 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.email:not(.expand) {
+  cursor: pointer;
+}
+.email:not(.expand):hover {
+  background: rgba( 255, 255, 255, 0 );
+}
+.from {
+  position: absolute;
+  transition: opacity 200ms 100ms cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+.from-contents {
+  display: flex;
+  flex-direction: row;
+  transform-origin: 0 0;
+  transition: transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.to {
+  opacity: 0;
+  position: absolute;
+  transition: opacity 100ms cubic-bezier(0.4, 0.0, 1, 1);
+}
+.to-contents {
+  transform: scale(.55);
+  transform-origin: 0 0;
+  transition: transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.avatar {
+  border-radius: 12px;
+  height: 24px;
+  left: 6px;
+  position: relative;
+  top: 4px;
+  width: 24px;
+}
+.name {
+  font-size: 14px;
+  line-height: 32px;
+  margin-left: 10px;
+}
+.top {
+  background: #FEEb40;
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  transition: height 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  width: 300px;
+}
+.avatar-large {
+  border-radius: 21px;
+  height: 42px;
+  margin-left: 12px;
+  position: relative;
+  top: 14px;
+  width: 42px;
+}
+.name-large {
+  color: rgb(34, 37, 41);
+  font-size: 16px;
+  line-height: 70px;
+  margin-left: 20px;
+}
+.x-touch {
+  align-items: center;
+  align-self: center;
+  cursor: pointer;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin-left: auto;
+  width: 50px;
+}
+.x {
+  background: rgb(34, 37, 41);
+  border-radius: 10px;
+  height: 20px;
+  position: relative;
+  width: 20px;
+}
+.x-touch:hover .x {
+  background: rgb(0, 0, 0);
+}
+.line1 {
+  background: #FEEb40;
+  height: 12px;
+  position: absolute;
+  transform: translateX(9px) translateY(4px) rotate(45deg);
+  width: 2px;
+}
+.line2 {
+  background: #FEEb40;
+  height: 12px;
+  position: absolute;
+  transform: translateX(9px) translateY(4px) rotate(-45deg);
+  width: 2px;
+}
+.bottom {
+  background: #FFF;
+  color:  #444247;
+  font-size: 14px;
+  height: 500px;
+  padding-top: 5px;
+  width: 300px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-right: 3%;
+}
+.twitter {
+  margin-left: 16px;
+  height: 30px;
+  position: relative;
+  top: 0px;
+  width: 30px;
+}
+.medium {
+  height: 30px;
+  margin-left: 16px;
+  position: relative;
+  width: 30px;
+}
+.link {
+  margin-left: 16px;
+}
+.link a {
+  color:  #444247;
+  text-decoration: none;
+}
+.link a:hover {
+  color:  #777579;
+}
+.email.expand {
+  border-radius: 6px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.10), 0 6px 6px rgba(0,0,0,0.16);
+  height: 500px;
+  width: 300px;
+}
+.expand .from {
+  opacity: 0;
+  transition: opacity 100ms cubic-bezier(0.4, 0.0, 1, 1);
+}
+.expand .from-contents {
+  transform: scale(1.91);
+}
+.expand .to {
+  opacity: 1;
+  transition: opacity 200ms 100ms cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+.expand .to-contents {
+  transform: scale(1);
+}
+
+
+
+
+    /*  */
 
 @import url(http://weloveiconfonts.com/api/?family=fontawesome);
 
@@ -329,7 +523,7 @@
     <div>
     <img src="/static/img/피카츄.png" style="width: 50px; height: auto; float: left;" alt="piCachu">
     <h3 class="float-md-start mb-0" style="height: 50px; line-height: 50px;">
-      piCachu
+      <a href="{% url 'main:mainpage' %}" style="text-decoration: none; color: white;">piCachu</a>
     </h3>
   </span>
     <nav class="nav nav-masthead justify-content-center float-md-end" style="height: 50px; line-height: 50px;">
@@ -376,7 +570,7 @@
               </div>
               <div class="app-form-group buttons">
                 <button class="app-form-button" id="cancelbtn" onclick="cancel()">CANCEL</button>
-                <button class="app-form-button" onclick="check()">SEND</button>
+                <button class="app-form-button sendbtn" onclick="check()">SEND</button>
               </div>
             </div>
           </div>
@@ -388,6 +582,50 @@
 
 </div>
 
+<div class="container" style="z-index: 100; position: absolute; top: 200px; left: 500px;">
+  <div class="email" onclick="this.classList.add('expand')" id="email" style="">
+    <div class="from">
+    </div>
+    <div class="to">
+      <div class="to-contents">
+        <div class="top">
+          <div class="name-large">당신을 위한 카페를 추천해 드릴게요!</div>
+          <div class="x-touch" onclick="document.querySelector('.email').classList.remove('expand');event.stopPropagation();">
+            <div class="x">
+              <div class="line1"></div>
+              <div class="line2"></div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="row" style="">
+            <div class="link">* 입력된 리뷰를 기반으로 키워드 분석,</div>
+            <div class="link">감성 분석을 진행하였으며, 분석된 유저의</div>
+            <div class="link">카페 선호 유형을 기반으로 동일 지역 5개의</div>
+            <div class="link">카페가 추천되었습니다. </div>
+          </div>
+          <div class="row" style="color: black; font-size: 15px; background-color: rgb(204, 204, 204);">
+            <div class="link" id="link1"></div>
+            <div class="link" id="link2"></div>
+            <div class="link" id="link3"></div>
+            <div class="link" id="link4"></div>
+            <div class="link" id="link5"></div>
+          </div>
+          <div class="row">
+              <div class="link"><a id="cafe0" href=""></a></div>
+              <div class="link"><a id="cafe1" href=""></a></div>
+              <div class="link"><a id="cafe2" href=""></a></div>
+              <div class="link"><a id="cafe3" href=""></a></div>
+              <div class="link"><a id="cafe4" href=""></a></div>
+              <div class="link"><a id="cafe5" href=""></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
   function cancel () {
     $("#locinput").val("")
@@ -396,6 +634,17 @@
   }
 
 </script>
+
+<script>
+  $(function(){
+  // 로딩 중에는 리로드를 못하게 막는다.(default는 true이다)
+  loader.setReload(true);
+  // 클래스 스타일 추가
+  loader.setStyle("color-4");
+  });
+  </script>
+  
+
 
 <script>
   function check() {
@@ -419,13 +668,62 @@
         $("#cafenameinput").val("");
         $("#cafenameinput").focus();
       } else {
+        $(".sendbtn").on("click", function(){
+
+              });
            $.ajax({
                type: "post",
                url: "{% url 'main:ajax' %}",
                data: {"cafeid":cafeid, "message":message, "csrfmiddlewaretoken": "{{ csrf_token }}"},
                success: function(response) {
                    reviewkeyword = response.reviewkeyword;
+                   goodorbadresult = response.goodorbadresult;
+
+                   firstcafename = response.firstcafename;
+                    secondcafename = response.secondcafename;
+                    thirdcafename = response.thirdcafename;
+                    fourthcafename = response.fourthcafename;
+                    fifthcafename = response.fifthcafename;
+                    firstcafeid = response.firstcafeid;
+                    secondcafeid = response.secondcafeid;
+                    thirdcafeid = response.thirdcafeid;
+                    fourthcafeid = response.fourthcafeid;
+                    fifthcafeid = response.fifthcafeid;
                    console.log(reviewkeyword);
+                   console.log(goodorbadresult);
+                   num = goodorbadresult.replace(/[^0-9]/g,'');
+                   $("#link1").text("당신의 리뷰 분석 결과😎:")
+                   $("#link2").text("리뷰 주요 키워드: "+ reviewkeyword)
+                   $("#link3").text("감성 분석: "+ goodorbadresult)
+
+                   console.log(firstcafename)
+
+                   $("#cafe0").text("🍓"+reviewkeyword+" 키워드 추천 카페 리스트🍰")
+                   $("#cafe1").text("1. "+firstcafename+" 분석 보러가기")
+                   $("#cafe2").text("2. "+secondcafename+" 분석 보러가기")
+                   $("#cafe3").text("3. "+thirdcafename+" 분석 보러가기")
+                   $("#cafe4").text("4. "+fourthcafename+" 분석 보러가기")
+                   $("#cafe5").text("5. "+fifthcafename+" 분석 보러가기")
+
+                   $("#cafe1").attr("href",'http://127.0.0.1:8000/cafedetail/'+firstcafeid+'/')
+                   $("#cafe2").attr("href",'http://127.0.0.1:8000/cafedetail/'+secondcafeid+'/')
+                   $("#cafe3").attr("href",'http://127.0.0.1:8000/cafedetail/'+thirdcafeid+'/')
+                   $("#cafe4").attr("href",'http://127.0.0.1:8000/cafedetail/'+fourthcafeid+'/')
+                   $("#cafe5").attr("href",'http://127.0.0.1:8000/cafedetail/'+fifthcafeid+'/')
+
+
+
+
+                   if (num>5000) {
+                     console.log(num)
+                    $("#link4").text("카페 경험에 만족하셨군요!")
+                    $("#link5").text("다시 한 번 "+locname+"지역 "+reviewkeyword+" 키워드 평이 좋은 카페를 추천해 드릴게요🥰")
+                   } else {
+                    $("#link4").text("카페 경험에 만족하지 못하셨군요ㅠㅠ")
+                    $("#link5").text(locname+"지역 "+reviewkeyword+"평이 좋은 카페를 추천해 드릴게요🥺 이번엔 만족하시길!")
+                   }
+                   $("#email").click();
+
                },
            })
 

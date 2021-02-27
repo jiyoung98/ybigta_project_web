@@ -40,6 +40,7 @@
   opacity: 1; /* Firefox */
 }
 
+.highlight { font-weight : bold; color:#FF0000; }
 
 form {
   position: relative;
@@ -159,7 +160,7 @@ form.opened button {
     <div>
     <img src="/static/img/피카츄.png" style="width: 50px; height: auto; float: left;" alt="piCachu">
     <h3 class="float-md-start mb-0" style="height: 50px; line-height: 50px;">
-      piCachu
+      <a href="{% url 'main:mainpage' %}" style="text-decoration: none; color: white;">piCachu</a>
     </h3>
   </span>
     <nav class="nav nav-masthead justify-content-center float-md-end" style="height: 50px; line-height: 50px;">
@@ -195,71 +196,6 @@ form.opened button {
 <main class="px-3" style="color: black;">
   <div class="container">
     <div class="row">
-      <div class="col-md-3 wholereview">
-        <div class="card border-light mb-3">
-          <div class="card-header" style="display: block;">전체 리뷰 수</div>
-          <div class="card-body">
-            <h5 class="card-title">
-              <div id="allreviewnum">
-                <strong style="color: #0085FF;">{{allreviewnum}}</strong>개의 리뷰
-              </div>
-            </h5>
-            <p class="card-text">
-              <canvas id="goodbadpiechart"></canvas>
-              <div>* 0점 리뷰의 경우 감성 분석 점수 기반으로 별점 보정 후 0,1,2점 리뷰는 부정, 4,5점 리뷰는 긍정으로 분류했습니다.</div>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 goodreview">
-        <div class="card border-light mb-3">
-          <div class="card-header" style="display: block;">별점 분포</div>
-          <div class="card-body">
-            <h5 class="card-title">
-            </h5>
-            <p class="card-text">
-              <canvas id="starbarchart"></canvas>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 badreview">
-        <div class="card border-light mb-3">
-          <div class="card-header" style="display: block;">리뷰 감성분석 평균 점수</div>
-          <div class="card-body">
-            <h5 class="card-title">
-              <div id="reviewscoreaverage">
-                총 감성분석 평균 <strong style="color: #0085FF;">{{averagescore}}</strong>점
-              </div>
-            </h5>
-            <p class="card-text">
-              <div>"커피맛" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{coffee_averagescore}}</strong>점</div>
-              <div>"디저트맛" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{dessert_averagescore}}</strong>점</div>
-              <div>"분위기" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{vibe_averagescore}}</strong>점</div>
-              <div>"사진" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{photo_averagescore}}</strong>점</div>
-              <div>"스터디" 키워드 리뷰 : 평균 <strong style="color: #0085FF;">{{study_averagescore}}</strong>점</div>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 simplereview">
-        <div class="card border-light mb-3">
-          <div class="card-header" style="display: block;">단순 리뷰 비율</div>
-          <div class="card-body">
-            <h5 class="card-title">단순 리뷰 수: <strong style="color: #0085FF;">{{keyword_none_num}}</strong>개</h5>
-            <h5 class="card-title">단순 리뷰 비율: <strong style="color: #0085FF;">{{keyword_none_proportion}}</strong>%</h5>
-            <p class="card-text">* 단순 리뷰란, 단어 토큰이 2개 미만으로 키워드 분류에서 제외된 리뷰를 말합니다.</p>
-            <div class="progress">
-  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
-  aria-valuenow="{{keyword_none_proportion}}" aria-valuemin="0" aria-valuemax="100" style="width:{{keyword_none_proportion}}%">
-  {{keyword_none_proportion}}%
-  </div>
-</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 keyword">
         <div class="card border-light mb-3">
         <div class="card-header" style="display: block;">키워드별 리뷰 분포</div>
@@ -280,13 +216,261 @@ form.opened button {
         </div>
       </div>
     </div>
-  </div>
+    
+    <div class="col-md-12 reviewcolumn" style="padding-left: 0; padding-right: 0;">
+      <div class="card border-light mb-3">
+        <div class="card-header" style="display: block;">리뷰 분석</div>
+        <div class="card-body" style="padding-top: 0; overflow:scroll; height: 350px;">
+          <p class="card-text">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="width: 1300px; color: rgb(119, 119, 119);">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">분위기</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">커피&디저트</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">서비스</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-price-tab" data-bs-toggle="pill" data-bs-target="#pills-price" type="button" role="tab" aria-controls="pills-price" aria-selected="false">가격</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-etc-tab" data-bs-toggle="pill" data-bs-target="#pills-etc" type="button" role="tab" aria-controls="pills-etc" aria-selected="false">단순 리뷰</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
+                <table class="table">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">review</th>
+                      <th scope="col" style="width: 150px;">keyword</th>
+                      <th scope="col">score</th>
+                      <th scope="col">star_correction</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for review in keyword_vibe %}
+                    <tr>
+                      <td class="line">{{review.text}}</td>
+                      <td>{{review.keyword}}</td>
+                      <td>{{review.score}}</td>
+                      <td>{{review.star_correction}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <table class="table">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">review</th>
+                      <th scope="col" style="width: 150px;">keyword</th>
+                      <th scope="col">score</th>
+                      <th scope="col">star_correction</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for review in keyword_coffee %}
+                    <tr>
+                      <td class="line">{{review.text}}</td>
+                      <td>{{review.keyword}}</td>
+                      <td>{{review.score}}</td>
+                      <td>{{review.star_correction}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <table class="table">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">review</th>
+                      <th scope="col" style="width: 150px;">keyword</th>
+                      <th scope="col">score</th>
+                      <th scope="col">star_correction</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for review in keyword_service %}
+                    <tr>
+                      <td class="line">{{review.text}}</td>
+                      <td>{{review.keyword}}</td>
+                      <td>{{review.score}}</td>
+                      <td>{{review.star_correction}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade" id="pills-price" role="tabpanel" aria-labelledby="pills-price-tab">
+                <table class="table">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">review</th>
+                      <th scope="col" style="width: 150px;">keyword</th>
+                      <th scope="col">score</th>
+                      <th scope="col">star_correction</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for review in keyword_price %}
+                    <tr>
+                      <td class="line">{{review.text}}</td>
+                      <td>{{review.keyword}}</td>
+                      <td>{{review.score}}</td>
+                      <td>{{review.star_correction}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade" id="pills-etc" role="tabpanel" aria-labelledby="pills-etc-tab">
+                <table class="table">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">review</th>
+                      <th scope="col" style="width: 150px;">keyword</th>
+                      <th scope="col">score</th>
+                      <th scope="col">star_correction</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for review in keyword_etc %}
+                    <tr>
+                      <td class="line">{{review.text}}</td>
+                      <td>{{review.keyword}}</td>
+                      <td>{{review.score}}</td>
+                      <td>{{review.star_correction}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        
+          </p>
+        </div>
+      </div>
+    </div>
 </main>
 
 </div>
 </div>
 
+<script>
+  var triggerTabList = [].slice.call(document.querySelectorAll('#myTab a'))
+triggerTabList.forEach(function (triggerEl) {
+  var tabTrigger = new bootstrap.Tab(triggerEl)
+
+  triggerEl.addEventListener('click', function (event) {
+    event.preventDefault()
+    tabTrigger.show()
+  })
+})
+</script>
+
+
+
+<!-- 키워드차트 -->
+<script>
+  keywordchartdata = {
+      datasets: [{
+          data: [{{keyword_vibe_num}}, {{keyword_coffee_num}}, {{keyword_service_num}}, {{keyword_price_num}}, {{keyword_etc_num}}],
+          backgroundColor: [
+          'rgba(161,140,209,0.3)',
+          'rgba(251,194,235,0.3)',
+          'rgba(212,252,121,0.3)',
+          'rgba(161,196,253,0.3)',
+          'rgba(254,225,64,0.3)',
+          ],
+          borderColor:[
+          '#a18cd1',
+          '#fbc2eb',
+          '#d4fc79',
+          '#a1c4fd',
+          '#fee140',
+          ],
+      }],
+  
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: [
+                '분위기',
+                '커피&디저트',
+                '서비스',
+                '가격',
+                '기타',
+            ],
+  };
+  
+  var keywordctx = document.getElementById("keywordchart");
+    var myPolarChart = new Chart(keywordctx, {
+      type: 'polarArea',
+      data: keywordchartdata,
+      options: {
+        elements: {
+          arc: {
+              borderWidth: 1
+          }
+      },
+                          legend: {
+                               position: 'top',
+                               labels: {
+                                       fontSize: 12,
+                                       fontFamily: 'sans-serif',
+                                           }
+                               }
+      }
+    });
+    
+  
+  
+  </script>
+  
+  
+  
+  <!-- 키워드별 긍부정차트 -->
+  <script>
+  var keywordgoodbadctx = document.getElementById("keywordgoodbadchart");
+  var chart = new Chart(keywordgoodbadctx, {
+    type: 'horizontalBar',
+    data: {
+      labels: [
+                '분위기',
+                '커피&디저트',
+                '서비스',
+                '가격',
+                '기타',
+            ],
+      datasets: [
+        {
+          data: [{{keyword_vibe_good}}, {{keyword_coffee_good}}, {{keyword_service_good}}, {{keyword_price_good}}, {{keyword_etc_good}}],
+          backgroundColor: '#B6E0FF',
+          label: '긍정'
+        },
+        {
+          data: [{{keyword_vibe_bad}}, {{keyword_coffee_bad}}, {{keyword_service_bad}}, {{keyword_price_bad}}, {{keyword_etc_bad}}],
+          backgroundColor: '#FFCBCB',
+          label: '부정'
+        }
+      ]
+    },
+    options: {
+      scales: {
+        xAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+  </script>
+  
 
 <script>
 $('button').on('click', function(e) {

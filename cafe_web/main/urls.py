@@ -14,4 +14,5 @@ urlpatterns = [
     path("write_recommend",write_recommend,name="write_recommend"),
     path("search",search,name="search"),
     path("ajax",ajax,name="ajax"),
+    path("forsave",forsave,name="forsave"),
 ]
