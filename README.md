@@ -1,5 +1,4 @@
-# 연세대학교 빅데이터 학회 YBIGTA 신입기수 프로젝트
-# 감성분석, 키워드 분류 기반 카페 평가 및 추천 프로젝트
+# 연세대학교 빅데이터 학회 YBIGTA 신입기수 프로젝트 : 감성분석, 키워드 분류 기반 카페 평가 및 추천 프로젝트
 ### 김승하, 한지영, 홍진우
 
 <img width="1786" alt="image" src="https://user-images.githubusercontent.com/61833149/167279737-161bf6b0-8fba-43e2-94ae-613daeb1da16.png">
